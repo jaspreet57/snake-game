@@ -1,9 +1,8 @@
 import React from 'react';
+import GamePlayer from './components/game-player';
 
 function App() {
-  return (
-   <div>App is here</div>
-  );
+  return <GamePlayer />
 }
 
 export default App;
