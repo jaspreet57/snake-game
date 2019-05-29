@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { startGame } from './actions';
+import { startGame, setupNewGame } from './actions';
 import './style.css';
 
 export class GamePlayer extends Component {
     componentDidMount() {
         console.log('GamePlayer Mounted with props', this.props);
-        this.props.startGame();
+        this.props.setupNewGame();
     }
 
     render() {
@@ -16,5 +16,5 @@ export class GamePlayer extends Component {
 
 export default connect(
     (state) => state.gameState, // map state to props
-    { startGame } // bind action creators
+    { startGame, setupNewGame } // bind action creators
 )(GamePlayer);
