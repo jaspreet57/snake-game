@@ -5,11 +5,16 @@ export const initialGameState = {
     running: false,
     paused: false,
     dead: false,
+    error: false
 }
 
 export const initialScoreBoard = {
     level: 1,
     score: 0
+}
+
+export const initialGameControls = {
+    direction: directions.RIGHT, // default direction
 }
 
 export const initialGridCanvas = {
@@ -35,7 +40,7 @@ export const initialCell = {
 export const initialSnakeInfo = {
     head: null, // head: {x: 3, x: 4}
     tail: null, // tail: {x: 1, y: 4}
-    direction: directions.RIGHT, // default direction
+    length: 0,
     speed: 1000, // 1 sec
     color: foodColors.DEFAULT
 }
