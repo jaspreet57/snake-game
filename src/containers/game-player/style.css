@@ -1,3 +1,8 @@
+*, html, body {
+    box-sizing: border-box;
+    margin: 0;
+}
+
 section.game-player {
     position: absolute;
     left: 0;
@@ -5,4 +10,23 @@ section.game-player {
     top: 0;
     bottom: 0;
     background: white;
+    border: 3px solid gray;
+    overflow: auto;
+}
+
+div.grid-canvas-wrapper {
+    position: relative;
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    border: 1px solid green;
+    width: 1000px;
+    height: 800px;
+}
+
+div.grid-canvas {
+    position: relative;
+    width: 750px;
+    height: 750px;
+    margin: 25px auto;
 }

@@ -1,12 +1,12 @@
 export const foodColors = {
     RED: {
-        colorName: 'red'
+        colorName: 'snake-color-red'
     },
     GLOWING_WHITE: {
-        colorName: 'glowing_white'
+        colorName: 'snake-color-glowing-white'
     },
     DEFAULT: {
-        colorName: 'grey'
+        colorName: 'snake-color-grey'
     }
 }
 

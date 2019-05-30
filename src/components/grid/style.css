@@ -1,0 +1,11 @@
+div.grid {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: #eeeeee;
+    display: grid;
+    grid-gap: 1px;
+    border: 1px solid gray;
+}

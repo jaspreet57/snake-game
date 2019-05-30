@@ -1,7 +1,9 @@
+import './style.css';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { startGame, setupNewGame } from './actions';
-import './style.css';
+import Grid from '../../components/grid';
+
 
 export class GamePlayer extends Component {
     componentDidMount() {
@@ -10,11 +12,19 @@ export class GamePlayer extends Component {
     }
 
     render() {
-        return <section className="game-player">GamePlayer Started ?: {String(this.props.started)} </section>
+        return (
+            <section className="game-player">
+                <div className="grid-canvas-wrapper">
+                    <div className="grid-canvas">
+                        <Grid />
+                    </div>
+                </div>
+            </section>
+        )
     }
 }
 
 export default connect(
-    (state) => state.gameState, // map state to props
+    null, // no state mapped
     { startGame, setupNewGame } // bind action creators
 )(GamePlayer);

@@ -31,14 +31,14 @@ export const createNewGridWithRandomSnake = (width, height) => {
         tail: randomCell,
         length: 1,
         speed: snake.startSpeed,
-        color: foodColors.DEFAULT
+        color: foodColors.DEFAULT.colorName
     }
 
     // update cell data also for snake
     cellsById[grid[randomCell.x][randomCell.y]] = {
         hasSnake: true,
         nextSnakeCell: null,   // if it hasSnake and is not head of snake or length of snake is not 1
-        snakeColor: foodColors.DEFAULT,
+        snakeColor: foodColors.DEFAULT.colorName,
         hasFood: false,
         foodInfo: null
     }
