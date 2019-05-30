@@ -27,5 +27,5 @@ export class GridCell extends Component {
 }
 
 export default connect(
-    (state, ownProps) => state.cellById[ownProps.cellId], // map state to props
+    (state, ownProps) => state.cellById[ownProps.cellId] || {}, // map state to props
 )(GridCell);

@@ -12,3 +12,11 @@ div.grid > div.grid-cell {
 .snake-color-grey {
     background: gray;
 }
+
+.food-name-apple {
+    border: 2px solid red;
+}
+
+.food-name-lichi {
+    border: 2px solid cyan;
+}

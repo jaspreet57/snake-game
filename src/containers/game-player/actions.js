@@ -7,6 +7,8 @@ export const GAME_ERROR = 'game-error';
 export const UPDATE_DIRECTION = 'update-direction';
 export const SETUP_CELLS_BY_ID = 'setup-cells-by-id';
 export const UPDATE_SNAKE = 'update-snake';
+export const CREATE_NEW_FOOD = 'create-new-food';
+export const PLACE_FOOD = 'place-food';
 
 export const startGame = () => ({
     type: START_GAME,

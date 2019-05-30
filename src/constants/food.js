@@ -24,3 +24,6 @@ export const foodList = {
         color: foodColors.GLOWING_WHITE
     }
 }
+
+
+export const foodListArray = [foodList.APPLE, foodList.LICHI]
