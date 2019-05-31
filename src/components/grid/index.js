@@ -15,8 +15,8 @@ export class Grid extends Component {
                 {
                     ((width, height) => {
                         const cells = [];
-                        for(let i=0; i < width; i++) {
-                            for(let j=0; j < height; j++) {
+                        for(let j=0; j < height; j++) {
+                            for(let i=0; i < width; i++) {
                                 cells.push(<GridCell key={this.props.grid[i][j]} cellId={this.props.grid[i][j]}/>)
                             }
                         }

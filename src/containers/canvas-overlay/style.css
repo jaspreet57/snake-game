@@ -1,0 +1,12 @@
+div.canvas-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: rgba(128, 128, 128, 0.363);
+    z-index: 5;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+}   

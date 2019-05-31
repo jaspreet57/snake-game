@@ -1,6 +1,5 @@
 import { loop, Cmd } from 'redux-loop';
-import { 
-    START_GAME,
+import {
     SETUP_NEW_GAME,
     SETUP_NEW_SCORE_BOARD,
     RESET_GAME,
@@ -10,10 +9,18 @@ import {
     UPDATE_SNAKE,
     SETUP_CELLS_BY_ID,
     CREATE_NEW_FOOD,
-    PLACE_FOOD
+    PLACE_FOOD,
+    STEP,
+    ADD_NEW_HEAD,
+    UPDATE_CURRENT_HEAD,
+    REMOVE_CURRENT_TAIL,
+    UPDATE_SCORE
 } from './actions';
+import {
+    START_GAME
+} from '../canvas-overlay/actions';
 import { initialCell, initialCellById, initialGameState, initialGridCanvas, initialScoreBoard, initialSnakeInfo, initialGameControls } from './initialStates';
-import { createNewGridWithRandomSnake, createNewFood } from './helpers/game-helpers';
+import { createNewGridWithRandomSnake, createNewFood, processStep } from './helpers/game-helpers';
 import { gridSize } from '../../config/game';
 
 export const gameStateReducer = (state = initialGameState, action) => {
@@ -67,10 +74,24 @@ export const gameStateReducer = (state = initialGameState, action) => {
                 dead: false,
             }
         case START_GAME:
-            return {
-                ...state,
-                running: true,
-            };
+            return loop(
+                {
+                    ...state,
+                    running: true,
+                },
+                Cmd.action({ type: STEP })
+            );
+        case STEP:
+            return loop(
+                state,
+                Cmd.run(processStep, {
+                    failActionCreator: (error) => ({
+                        type: GAME_ERROR,
+                        error: error
+                    }),
+                    args: [Cmd.getState, Cmd.dispatch]
+                })
+            );
         default:
             return state;
     }
@@ -83,6 +104,11 @@ export const scoreBoardReducer = (state = initialScoreBoard, action) => {
                 ...state,
                 level: 1,
                 score: 0
+            }
+        case UPDATE_SCORE:
+            return {
+                ...state,
+                score: action.payload.score
             }
         default:
             return state;
@@ -127,6 +153,9 @@ export const cellByIdReducer = (state = initialCellById, action) => {
         case SETUP_CELLS_BY_ID:
             return action.payload;
         case PLACE_FOOD:
+        case ADD_NEW_HEAD:
+        case UPDATE_CURRENT_HEAD:
+        case REMOVE_CURRENT_TAIL:
             return {
                 ...state,
                 [action.payload.id]: cellReducer(state[action.payload.id], action)
@@ -139,6 +168,9 @@ export const cellByIdReducer = (state = initialCellById, action) => {
 export const cellReducer = (state = initialCell, action) => {
     switch (action.type) {
         case PLACE_FOOD:
+        case ADD_NEW_HEAD:
+        case UPDATE_CURRENT_HEAD:
+        case REMOVE_CURRENT_TAIL:
             return {
                 ...state,
                 ...action.payload

@@ -1,6 +1,8 @@
 import { foodColors, foodListArray } from '../../../constants/food';
+import { directions } from '../../../constants/directions';
 import { snake } from '../../../config/game';
-import { rand } from './utils';
+import { rand, getNextNumberInRange } from './utils';
+import { UPDATE_SNAKE, CREATE_NEW_FOOD, ADD_NEW_HEAD, UPDATE_CURRENT_HEAD, REMOVE_CURRENT_TAIL, UPDATE_SCORE } from '../actions';
 
 export const createNewGridWithRandomSnake = (width, height) => {
     const grid = [];
@@ -80,3 +82,117 @@ export const createNewFood = (getState) => {
         foodInfo: randomFood
     };
 };
+
+export const getNextHead = (direction, head, width, height) => {
+    switch(direction) {
+        case directions.UP:
+            return {
+                x: head.x,
+                y: getNextNumberInRange(height, head.y, -1)
+            };
+        case directions.RIGHT:
+            return {
+                x: getNextNumberInRange(width, head.x, 1),
+                y: head.y
+            };
+        case directions.DOWN:
+            return {
+                x: head.x,
+                y: getNextNumberInRange(height, head.y, 1)
+            };
+        case directions.LEFT:
+            return {
+                x: getNextNumberInRange(width, head.x, -1),
+                y: head.y
+            };
+        default:
+            return head;
+    }
+};
+
+export const markSnakeDead = () => {
+    // dead snake
+    console.log('snake is dead');
+}
+
+export const processStep = (getState, dispatch) => {
+    const state = getState();
+    if(state.gameState.running && !(state.gameState.paused || state.gameState.error || state.gameState.dead)) {
+        const nextSnakeHead = getNextHead(
+                state.gameControls.direction,
+                state.snakeInfo.head,
+                state.gridCanvas.width,
+                state.gridCanvas.height
+            );
+        
+        const nextHeadCellInfo = state.cellById[state.gridCanvas.grid[nextSnakeHead.x][nextSnakeHead.y]];
+        if (nextHeadCellInfo.hasSnake) {
+            if ((state.snakeInfo.length === 2) || !((state.snakeInfo.tail.x === nextSnakeHead.x) && (state.snakeInfo.tail.y === nextSnakeHead.y))) {
+                return markSnakeDead();
+            }
+        }
+
+        const newSnakeInfo = {
+            head: nextSnakeHead,
+            color: (nextHeadCellInfo.hasFood && nextHeadCellInfo.foodInfo.color.colorName) || state.snakeInfo.color,
+            length: (nextHeadCellInfo.hasFood && (state.snakeInfo.length + 1)) || state.snakeInfo.length,
+        }
+
+        // headMove()
+        // add new head
+        dispatch({
+            type: ADD_NEW_HEAD,
+            payload: {
+                id: nextHeadCellInfo.id,
+                hasSnake: true,
+                nextSnakeCell: null,
+                snakeColor: newSnakeInfo.color,
+                hasFood: false,
+                foodInfo: null
+            }
+        });
+        // update old head cell
+        const currentHeadCell = state.cellById[state.gridCanvas.grid[state.snakeInfo.head.x][state.snakeInfo.head.y]];
+        dispatch({
+            type: UPDATE_CURRENT_HEAD,
+            payload: {
+                id: currentHeadCell.id,
+                nextSnakeCell: nextSnakeHead,
+            }
+        });
+
+
+        // tailMove()
+        if (!nextHeadCellInfo.hasFood) {
+            // remove current tail
+            const currentTailCell = state.cellById[state.gridCanvas.grid[state.snakeInfo.tail.x][state.snakeInfo.tail.y]];
+            dispatch({
+                type: REMOVE_CURRENT_TAIL,
+                payload: {
+                    id: currentTailCell.id,
+                    nextSnakeCell: null,
+                    hasSnake: false,
+                    snakeColor: null,
+                    hasFood: false,
+                    foodInfo: null
+                }
+            });
+            // update snake info with new tail
+            newSnakeInfo.tail = currentTailCell.nextSnakeCell || nextSnakeHead; // for snake length 1 tail will be equal to newSnakeHead
+        }
+
+        dispatch({ type: UPDATE_SNAKE, payload: newSnakeInfo });
+
+        if (nextHeadCellInfo.hasFood) {
+            dispatch({
+                type: UPDATE_SCORE,
+                payload: {
+                    score: (state.scoreBoard.score + nextHeadCellInfo.foodInfo.points)
+                }
+            })
+            dispatch({
+                type: CREATE_NEW_FOOD
+            });
+        }
+    }
+}
