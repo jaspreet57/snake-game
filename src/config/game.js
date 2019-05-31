@@ -4,5 +4,5 @@ export const gridSize = {
 }
 
 export const snake = {
-    startSpeed: 1000 // 1 sec
+    startSpeed: 500 // .5 sec
 }

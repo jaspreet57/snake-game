@@ -9,4 +9,19 @@ div.canvas-overlay {
     display: grid;
     justify-items: center;
     align-items: center;
-}   
+}  
+
+div.pause-button {
+    position: absolute;
+    top: -60px;
+    right: -50px;
+    padding: 10px;
+    z-index: 5;
+}
+
+div.pause-button > button{
+    display: inline-block;
+    font-size: 20px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.5);
+}

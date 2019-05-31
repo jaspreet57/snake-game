@@ -5,7 +5,6 @@ import {
     RESET_GAME,
     SETUP_GRID,
     GAME_ERROR,
-    UPDATE_DIRECTION,
     UPDATE_SNAKE,
     SETUP_CELLS_BY_ID,
     CREATE_NEW_FOOD,
@@ -14,14 +13,18 @@ import {
     ADD_NEW_HEAD,
     UPDATE_CURRENT_HEAD,
     REMOVE_CURRENT_TAIL,
-    UPDATE_SCORE
+    UPDATE_SCORE,
+    DEAD_GAME
 } from './actions';
 import {
-    START_GAME
+    START_GAME,
+    UPDATE_DIRECTION,
+    PAUSE_GAME
 } from '../canvas-overlay/actions';
 import { initialCell, initialCellById, initialGameState, initialGridCanvas, initialScoreBoard, initialSnakeInfo, initialGameControls } from './initialStates';
 import { createNewGridWithRandomSnake, createNewFood, processStep } from './helpers/game-helpers';
 import { gridSize } from '../../config/game';
+import { directions } from '../../constants/directions';
 
 export const gameStateReducer = (state = initialGameState, action) => {
     switch (action.type) {
@@ -31,6 +34,7 @@ export const gameStateReducer = (state = initialGameState, action) => {
                 Cmd.list([
                     Cmd.action({ type: RESET_GAME }),
                     Cmd.action({ type: SETUP_NEW_SCORE_BOARD }),
+                    Cmd.action({ type: UPDATE_DIRECTION, direction: directions.RIGHT}),
                     Cmd.run(createNewGridWithRandomSnake, {
                         successActionCreator: (data) => ({
                             type: SETUP_GRID,
@@ -72,15 +76,29 @@ export const gameStateReducer = (state = initialGameState, action) => {
                 running: false,
                 paused: false,
                 dead: false,
+                error: false,
+            }
+        case DEAD_GAME:
+            return {
+                ...state,
+                dead: true,
             }
         case START_GAME:
             return loop(
                 {
                     ...state,
                     running: true,
+                    paused: false,
+                    dead: false,
+                    error: false,
                 },
                 Cmd.action({ type: STEP })
             );
+        case PAUSE_GAME:
+            return {
+                ...state,
+                paused: true,
+            }
         case STEP:
             return loop(
                 state,
@@ -118,10 +136,13 @@ export const scoreBoardReducer = (state = initialScoreBoard, action) => {
 export const gameControlsReducer = (state = initialGameControls, action) => {
     switch (action.type) {
         case UPDATE_DIRECTION:
-            return {
-                ...state,
-                direction: action.direction
-            }
+            return loop(
+                {
+                    ...state,
+                    direction: action.direction
+                },
+                Cmd.action({ type: STEP })
+            );
         default:
             return state;
     }

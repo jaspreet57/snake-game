@@ -13,6 +13,14 @@ div.grid > div.grid-cell {
     background: gray;
 }
 
+.snake-color-red {
+    background: red;
+}
+
+.snake-color-glowing-white {
+    background: cyan;
+}
+
 .food-name-apple {
     border: 2px solid red;
 }

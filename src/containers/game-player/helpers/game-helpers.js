@@ -2,15 +2,18 @@ import { foodColors, foodListArray } from '../../../constants/food';
 import { directions } from '../../../constants/directions';
 import { snake } from '../../../config/game';
 import { rand, getNextNumberInRange } from './utils';
-import { UPDATE_SNAKE, CREATE_NEW_FOOD, ADD_NEW_HEAD, UPDATE_CURRENT_HEAD, REMOVE_CURRENT_TAIL, UPDATE_SCORE } from '../actions';
+import { UPDATE_SNAKE, CREATE_NEW_FOOD, ADD_NEW_HEAD, UPDATE_CURRENT_HEAD, REMOVE_CURRENT_TAIL, UPDATE_SCORE, DEAD_GAME } from '../actions';
+import { GameTimer } from './game-timer';
+
+const gameTimer = new GameTimer();
 
 export const createNewGridWithRandomSnake = (width, height) => {
     const grid = [];
     const cellsById = {};
 
-    for(let i = 0; i < width; i++) {
+    for (let i = 0; i < width; i++) {
         grid.push([]);
-        for(let j=0; j < height; j++) {
+        for (let j = 0; j < height; j++) {
             const id = `cell_${i}_${j}`;
             cellsById[id] = {
                 hasSnake: false,
@@ -63,8 +66,8 @@ export const createNewFood = (getState) => {
     const { gridCanvas: { grid, width, height }, cellById } = getState();
 
     const emptyCells = [];
-    for(let i=0; i < width; i++) {
-        for(let j=0; j<height; j++) {
+    for (let i = 0; i < width; i++) {
+        for (let j = 0; j < height; j++) {
             const cell = cellById[grid[i][j]];
 
             if (!cell.hasSnake && !cell.hasFood) { // cells that has no food and no snake
@@ -84,7 +87,7 @@ export const createNewFood = (getState) => {
 };
 
 export const getNextHead = (direction, head, width, height) => {
-    switch(direction) {
+    switch (direction) {
         case directions.UP:
             return {
                 x: head.x,
@@ -110,25 +113,36 @@ export const getNextHead = (direction, head, width, height) => {
     }
 };
 
-export const markSnakeDead = () => {
-    // dead snake
-    console.log('snake is dead');
+export const markSnakeDead = (dispatch) => {
+    dispatch({
+        type: DEAD_GAME
+    })
 }
 
 export const processStep = (getState, dispatch) => {
     const state = getState();
-    if(state.gameState.running && !(state.gameState.paused || state.gameState.error || state.gameState.dead)) {
+    const continueTimer = moveOneStep(state, dispatch);
+    continueTimer && gameTimer.nextStep(dispatch, state);
+}
+
+export const processOneStepOnly = (getState, dispatch) => {
+    const state = getState();
+    moveOneStep(state, dispatch);
+}
+
+export const moveOneStep = (state, dispatch) => {
+    if (state.gameState.running && !(state.gameState.paused || state.gameState.error || state.gameState.dead)) {
         const nextSnakeHead = getNextHead(
-                state.gameControls.direction,
-                state.snakeInfo.head,
-                state.gridCanvas.width,
-                state.gridCanvas.height
-            );
-        
+            state.gameControls.direction,
+            state.snakeInfo.head,
+            state.gridCanvas.width,
+            state.gridCanvas.height
+        );
+
         const nextHeadCellInfo = state.cellById[state.gridCanvas.grid[nextSnakeHead.x][nextSnakeHead.y]];
         if (nextHeadCellInfo.hasSnake) {
             if ((state.snakeInfo.length === 2) || !((state.snakeInfo.tail.x === nextSnakeHead.x) && (state.snakeInfo.tail.y === nextSnakeHead.y))) {
-                return markSnakeDead();
+                return markSnakeDead(dispatch);
             }
         }
 
@@ -194,5 +208,9 @@ export const processStep = (getState, dispatch) => {
                 type: CREATE_NEW_FOOD
             });
         }
+
+        return true;
+    } else {
+        return false;
     }
 }

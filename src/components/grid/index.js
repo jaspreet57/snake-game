@@ -31,4 +31,3 @@ export class Grid extends Component {
 export default connect(
     (state) => state.gridCanvas, // map state to props
 )(Grid);
-        
