@@ -9,24 +9,26 @@ section.game-player {
     right: 0;
     top: 0;
     bottom: 0;
-    background: white;
-    border: 3px solid gray;
+    background-image: url('./assets/alchemy.gif');
+    border: 3px solid black;
     overflow: auto;
 }
 
 div.grid-canvas-wrapper {
     position: relative;
-    margin: auto;
-    margin-top: 50px;
-    margin-bottom: 50px;
-    border: 1px solid green;
+    margin: 0 auto;
     width: 1000px;
-    height: 800px;
+    height: 100%;
+    overflow: auto;
+    background: rgba(0, 0, 0, 0.1);
 }
 
 div.grid-canvas {
     position: relative;
     width: 750px;
     height: 750px;
-    margin: 25px auto;
+    margin: auto;
+    margin-top: 5px;
+    margin-bottom: 75px;
+    background: rgba(0, 0, 0, 0);
 }

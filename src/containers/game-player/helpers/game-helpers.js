@@ -18,6 +18,8 @@ export const createNewGridWithRandomSnake = (width, height) => {
             cellsById[id] = {
                 hasSnake: false,
                 nextSnakeCell: null,   // if it hasSnake and is not head of snake
+                nextSnakeDirection: null,
+                isSnakeHead: null,
                 snakeColor: null,
                 hasFood: false,
                 foodInfo: null,
@@ -45,6 +47,8 @@ export const createNewGridWithRandomSnake = (width, height) => {
         id: grid[randomCell.x][randomCell.y],
         hasSnake: true,
         nextSnakeCell: null,   // if it hasSnake and is not head of snake or length of snake is not 1
+        nextSnakeDirection: null,
+        isSnakeHead: true,
         snakeColor: foodColors.DEFAULT.colorName,
         hasFood: false,
         foodInfo: null
@@ -160,6 +164,8 @@ export const moveOneStep = (state, dispatch) => {
                 id: nextHeadCellInfo.id,
                 hasSnake: true,
                 nextSnakeCell: null,
+                nextSnakeDirection: null,
+                isSnakeHead: true,
                 snakeColor: newSnakeInfo.color,
                 hasFood: false,
                 foodInfo: null
@@ -172,6 +178,8 @@ export const moveOneStep = (state, dispatch) => {
             payload: {
                 id: currentHeadCell.id,
                 nextSnakeCell: nextSnakeHead,
+                isSnakeHead: false,
+                nextSnakeDirection: state.gameControls.direction
             }
         });
 
@@ -185,6 +193,8 @@ export const moveOneStep = (state, dispatch) => {
                 payload: {
                     id: currentTailCell.id,
                     nextSnakeCell: null,
+                    nextSnakeDirection: null,
+                    isSnakeHead: null,
                     hasSnake: false,
                     snakeColor: null,
                     hasFood: false,

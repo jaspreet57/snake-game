@@ -19,8 +19,10 @@ import {
 import {
     START_GAME,
     UPDATE_DIRECTION,
+} from '../game-controls/actions';
+import {
     PAUSE_GAME
-} from '../canvas-overlay/actions';
+} from '../../components/score-board/actions';
 import { initialCell, initialCellById, initialGameState, initialGridCanvas, initialScoreBoard, initialSnakeInfo, initialGameControls } from './initialStates';
 import { createNewGridWithRandomSnake, createNewFood, processStep } from './helpers/game-helpers';
 import { gridSize } from '../../config/game';

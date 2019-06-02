@@ -8,9 +8,13 @@ export class GridCell extends Component {
     render() {
         const cellClasses = ['grid-cell'];
 
-
         if (this.props.hasSnake) {
             cellClasses.push(this.props.snakeColor || foodColors.DEFAULT.colorName);
+            if (this.props.isSnakeHead) {
+                cellClasses.push('snake-head');
+            } else {
+                cellClasses.push(`snake-body snake-${this.props.nextSnakeDirection}`);
+            }
         }
 
         if (this.props.hasFood) {

@@ -31,6 +31,8 @@ export const initialCell = {
     /**
      * hasSnake: false,
      * nextSnakeCell: {x: 2, y: 1},   // if it hasSnake
+     * nextSnakeDirection: null // example 'right', 'left', 'up', 'down'
+     * isSnakeHead: false,
      * snakeColor: foodColors.DEFAULT
      * hasFood: false,
      * foodInfo: null || food.foodList.APPLE, etc,

@@ -6,7 +6,7 @@ div.grid > div.grid-cell {
 
 
 .grid-cell {
-    background: white;
+    background: #f3f3ef
 }
 
 .snake-color-grey {
@@ -17,14 +17,63 @@ div.grid > div.grid-cell {
     background: red;
 }
 
-.snake-color-glowing-white {
-    background: cyan;
+.snake-color-pink {
+    background: pink;
 }
+
+.snake-color-yellow {
+    background: yellow;
+}
+
+.snake-color-green {
+    background: green;
+}
+
 
 .food-name-apple {
     border: 2px solid red;
+    background-image: url('./assets/food-apple.png');
+    background-size: contain;
 }
 
-.food-name-lichi {
-    border: 2px solid cyan;
+.food-name-strawberry {
+    border: 2px solid pink;
+    background-image: url('./assets/food-strawberry.png');
+    background-size: contain;
+}
+
+.food-name-banana {
+    border: 2px solid yellow;
+    background-image: url('./assets/food-banana.png');
+    background-size: contain;
+}
+
+.food-name-frog {
+    border: 2px solid green;
+    background-image: url('./assets/food-frog.png');
+    background-size: contain;
+}
+
+
+/* snake directions and snake head */
+.snake-head {
+    background-image: url('./assets/snake-head.png');
+    background-size: contain;
+}
+
+.snake-body {
+    background-size: contain;
+}
+
+.snake-right {
+    background-image: url('./assets/right-snake.png');
+}
+.snake-left {
+    background-image: url('./assets/left-snake.png');
+}
+.snake-down {
+    background-image: url('./assets/down-snake.png');
+}
+.snake-up {
+    background-image: url('./assets/up-snake.png');
 }

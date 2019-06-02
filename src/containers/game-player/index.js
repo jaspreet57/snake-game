@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { setupNewGame } from './actions';
 import Grid from '../../components/grid';
-import CanvasOverlay from '../canvas-overlay';
+import GameControls from '../game-controls';
+import ScoreBoard from '../../components/score-board';
 
 
 export class GamePlayer extends Component {
@@ -15,9 +16,10 @@ export class GamePlayer extends Component {
         return (
             <section className="game-player">
                 <div className="grid-canvas-wrapper">
+                    <ScoreBoard />
                     <div className="grid-canvas">
                         <Grid />
-                        <CanvasOverlay />
+                        <GameControls />
                     </div>
                 </div>
             </section>

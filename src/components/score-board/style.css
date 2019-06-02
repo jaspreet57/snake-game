@@ -1,0 +1,43 @@
+.score-board-wrapper {
+    height: 75px;
+    padding: 10px;
+}
+
+.score-board {
+    width: 800px;
+    height: 100%;
+    border: 1px solid #94d695;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    align-items: center;
+    justify-items: center;
+    font-family: monospace;
+}
+
+.score-board.default {
+    background: rgba(202, 202, 199, 0.95);
+}
+
+.score-board.white {
+    background: white;
+}
+
+div.pause-button > button{
+    display: inline-block;
+    font-size: 20px;
+    padding: 5px;
+    background: rgb(72, 189, 191);
+}
+
+.score-board label {
+    font-size: 20px;
+    padding: 5px;
+}
+
+.score-board span {
+    font-size: 22px;
+    padding: 10px;
+
+}

@@ -1,14 +1,12 @@
 import './style.css';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { startGame, updateDirection, pauseGame } from './actions';
+import { startGame, updateDirection } from './actions';
 import { setupNewGame } from '../game-player/actions';
 import { directions } from '../../constants/directions';
+import ButtonSVG from '../../components/button-svg';
 
-let count = 1;
-
-
-export class CanvasOverlay extends Component {
+export class GameControls extends Component {
     constructor(props) {
         super(props);
         this.startGame = this.startGame.bind(this);
@@ -18,7 +16,7 @@ export class CanvasOverlay extends Component {
     }
 
     handleKeyDown(e) {
-        console.log('handle key down called', count++);
+        console.log('handle key down called')
         let direction;
         switch(e.keyCode) {
             case 39:
@@ -65,33 +63,38 @@ export class CanvasOverlay extends Component {
         if (!this.props.running) {
             return (
                 <div className="canvas-overlay">
-                    <button onClick={this.startGame} >Start New Game</button>
+                    <ButtonSVG startGame={this.startGame} buttonText={'Start Game'} config={{
+                        width: '300px',
+                        xCordinates: '141'
+                    }}/>
                 </div>
             )
         } else if (this.props.running && this.props.paused) {
             return (
                 <div className="canvas-overlay">
-                    <button onClick={this.startGame} >Resume Game</button>
+                    <ButtonSVG startGame={this.startGame} buttonText={'Resume Game'} config={{
+                        width: '300px',
+                        xCordinates: '125'
+                    }}/>
                 </div>
             )
         } else if (this.props.running && this.props.dead) {
             return (
                 <div className="canvas-overlay">
-                    <div>You are dead !</div>
-                    <button onClick={this.setUpNewGame} >Ok</button>
+                    <div class="dead-text">You are dead !</div>
+                    <ButtonSVG startGame={this.setUpNewGame} buttonText={'Ok'} config={{
+                        width: '200px',
+                        xCordinates: '210'
+                    }}/>
                 </div>
             )
         } else {
-            return (
-                <div className="pause-button">
-                    <button onClick={this.pauseGame} >Pause Game</button>
-                </div>
-            );
+            return null;
         }
     }
 }
 
 export default connect(
     (state) => state.gameState,
-    { startGame, pauseGame, updateDirection, setupNewGame }
-)(CanvasOverlay);
+    { startGame, updateDirection, setupNewGame }
+)(GameControls);
