@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "author": "Jaspreet Singh",
+  "description": "Snake Game for fun by Jaspreet Singh (erjaspreet57@gmail.com)",
   "dependencies": {
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -13,10 +14,12 @@
     "redux-loop": "^5.0.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "rm -rf build && react-scripts start",
+    "build": "rm -rf build && react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build -b master"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -32,5 +35,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^2.0.1"
   }
 }
