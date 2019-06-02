@@ -14,7 +14,8 @@ import {
     UPDATE_CURRENT_HEAD,
     REMOVE_CURRENT_TAIL,
     UPDATE_SCORE,
-    DEAD_GAME
+    DEAD_GAME,
+    UPDATE_LEVEL
 } from './actions';
 import {
     START_GAME,
@@ -129,6 +130,11 @@ export const scoreBoardReducer = (state = initialScoreBoard, action) => {
             return {
                 ...state,
                 score: action.payload.score
+            }
+        case UPDATE_LEVEL:
+            return {
+                ...state,
+                level: action.payload.level
             }
         default:
             return state;

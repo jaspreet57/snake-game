@@ -1,8 +1,8 @@
 import { foodColors, foodListArray } from '../../../constants/food';
 import { directions } from '../../../constants/directions';
-import { snake } from '../../../config/game';
+import { snake, speedLevels } from '../../../config/game';
 import { rand, getNextNumberInRange } from './utils';
-import { UPDATE_SNAKE, CREATE_NEW_FOOD, ADD_NEW_HEAD, UPDATE_CURRENT_HEAD, REMOVE_CURRENT_TAIL, UPDATE_SCORE, DEAD_GAME } from '../actions';
+import { UPDATE_SNAKE, CREATE_NEW_FOOD, ADD_NEW_HEAD, UPDATE_CURRENT_HEAD, REMOVE_CURRENT_TAIL, UPDATE_SCORE, DEAD_GAME, UPDATE_LEVEL } from '../actions';
 import { GameTimer } from './game-timer';
 
 const gameTimer = new GameTimer();
@@ -123,6 +123,23 @@ export const markSnakeDead = (dispatch) => {
     })
 }
 
+export const changeGameLevel = (dispatch, score, level) => {
+    if(speedLevels[level+1] && score > speedLevels[level+1].minScore) {
+        dispatch({
+            type: UPDATE_LEVEL,
+            payload: {
+                level: level+1
+            }
+        });
+        dispatch({
+            type: UPDATE_SNAKE,
+            payload: {
+                speed: speedLevels[level+1].speed
+            }
+        });
+    }
+}
+
 export const processStep = (getState, dispatch) => {
     const state = getState();
     const continueTimer = moveOneStep(state, dispatch);
@@ -208,17 +225,18 @@ export const moveOneStep = (state, dispatch) => {
         dispatch({ type: UPDATE_SNAKE, payload: newSnakeInfo });
 
         if (nextHeadCellInfo.hasFood) {
+            const newScore = state.scoreBoard.score + nextHeadCellInfo.foodInfo.points;
             dispatch({
                 type: UPDATE_SCORE,
                 payload: {
-                    score: (state.scoreBoard.score + nextHeadCellInfo.foodInfo.points)
+                    score: newScore
                 }
             })
+            changeGameLevel(dispatch, newScore, state.scoreBoard.level);
             dispatch({
                 type: CREATE_NEW_FOOD
             });
         }
-
         return true;
     } else {
         return false;

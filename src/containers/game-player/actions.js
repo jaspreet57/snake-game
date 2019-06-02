@@ -13,6 +13,7 @@ export const UPDATE_CURRENT_HEAD = 'update-current-head';
 export const REMOVE_CURRENT_TAIL = 'remove-current-tail';
 export const UPDATE_SCORE = 'update-score';
 export const DEAD_GAME = 'dead-game';
+export const UPDATE_LEVEL = 'update-level';
 
 export const setupNewGame = () => ({
     type: SETUP_NEW_GAME // this will setup game state, then score board, then grid and all cells, and then place random snake in it.
