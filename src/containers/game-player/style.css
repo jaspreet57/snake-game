@@ -20,15 +20,14 @@ div.grid-canvas-wrapper {
     width: 1000px;
     height: 100%;
     overflow: auto;
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 150, 136, 0.13);
 }
 
 div.grid-canvas {
     position: relative;
-    width: 750px;
-    height: 750px;
+    width: 650px;
+    height: 650px;
     margin: auto;
     margin-top: 5px;
     margin-bottom: 75px;
-    background: rgba(0, 0, 0, 0);
 }

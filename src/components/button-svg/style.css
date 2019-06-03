@@ -5,12 +5,6 @@
 }
 
 svg {
-    width: 80vw;
-    position: fixed;
-    
-    top: 50vh;
-    left: 50vw;
-    transform: translateY(-50%) translateX(-50%);
     z-index: 2;
     filter: drop-shadow(0 0 40px rgba(0, 0, 0, 0.3));
 }
@@ -27,7 +21,7 @@ svg > path {
     cursor: pointer;
     animation: blob 2s infinite forwards;
     transform-origin: 50% 50%;
-    fill: #94d695;
+    fill: #FFEB3B;
 }
 
 @keyframes blob {

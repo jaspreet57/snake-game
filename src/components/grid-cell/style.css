@@ -6,7 +6,7 @@ div.grid > div.grid-cell {
 
 
 .grid-cell {
-    background: #f3f3ef
+    background: white;
 }
 
 .snake-color-grey {
@@ -59,10 +59,14 @@ div.grid > div.grid-cell {
 .snake-head {
     background-image: url('./assets/snake-head.png');
     background-size: contain;
+    background-color: transparent;
 }
 
 .snake-body {
-    background-size: contain;
+    background-size: 15px 15px;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 10px
 }
 
 .snake-right {

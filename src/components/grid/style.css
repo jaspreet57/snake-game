@@ -4,7 +4,7 @@ div.grid {
     bottom: 0;
     right: 0;
     left: 0;
-    background: rgb(190, 184, 184);
+    background: rgb(219, 241, 220);
     display: grid;
     grid-gap: 1px;
     border: 1px solid gray;

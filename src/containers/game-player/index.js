@@ -5,6 +5,7 @@ import { setupNewGame } from './actions';
 import Grid from '../../components/grid';
 import GameControls from '../game-controls';
 import ScoreBoard from '../../components/score-board';
+import Footer from '../../components/footer';
 
 
 export class GamePlayer extends Component {
@@ -21,6 +22,7 @@ export class GamePlayer extends Component {
                         <Grid />
                         <GameControls />
                     </div>
+                    <Footer />
                 </div>
             </section>
         )

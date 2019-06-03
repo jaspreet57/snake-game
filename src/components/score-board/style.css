@@ -4,7 +4,7 @@
 }
 
 .score-board {
-    width: 800px;
+    width: 700px;
     height: 100%;
     border: 1px solid #94d695;
     margin: auto;
@@ -14,10 +14,12 @@
     align-items: center;
     justify-items: center;
     font-family: monospace;
+    font-weight: 900;
 }
 
 .score-board.default {
-    background: rgba(202, 202, 199, 0.95);
+    background: rgba(76, 175, 80, 0.73);
+    color: white;
 }
 
 .score-board.white {
